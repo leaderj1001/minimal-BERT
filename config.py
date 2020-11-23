@@ -26,6 +26,10 @@ def load_args():
     parser.add_argument('--cuda', type=bool, default=False)
     parser.add_argument('--epochs', type=int, default=150)
 
+    # down-stream task
+    parser.add_argument('--task', type=bool, default=None)
+    parser.add_argument('--checkpoints', type=str, default=None)
+
     args = parser.parse_args()
 
     return args
