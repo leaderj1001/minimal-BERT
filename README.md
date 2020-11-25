@@ -3,9 +3,9 @@
 ## Experiments
 | Model | Layer | Hidden | Heads | lr | Acc (%) |
 |:-:|:-:|:-:|:-:|:-:|:-:|
-| BERT, BASE (Paper) | 12 | 768 | 12 | 66.4 |
+| BERT, BASE (Paper) | 12 | 768 | 12 | | 66.4 |
 | BERT, BASE (Our) | 12 | 768 | 12 | 3e-5 | 67.9 |
-| BERT, LARGE (Paper) | 24 | 1024 | 16 | 70.1 |
+| BERT, LARGE (Paper) | 24 | 1024 | 16 | | 70.1 |
 | BERT, LARGE (Our) | 24 | 1024 | 16 | 2e-5 | 71.1 |
 
 ## Quick Start
