@@ -130,9 +130,6 @@ def _train(epoch, train_loader, model, optimizer, criterion, args):
     nsp_acc = nsp_acc / len(train_loader.dataset) * 100.
     print('[Train Epoch: {0:4d}] mlm loss: {1:.3f}, nsp loss: {2:.3f}, loss: {3:.3f}, mlm acc: {4:.4f}, nsp acc: {5:.4f}'.format(epoch, mlm_losses, nsp_losses, losses, mlm_acc, nsp_acc))
 
-    # Todo:
-    # visualization
-
     return mlm_losses, nsp_losses, losses, mlm_acc, nsp_acc
 
 
@@ -148,31 +145,30 @@ def main(args):
     if args.cuda:
         model = model.cuda()
 
-    # train_mlm_losses, train_nsp_losses, train_losses, train_mlm_acc_list, train_nsp_acc_list = [], [], [], [], []
-    # test_mlm_losses, test_nsp_losses, test_losses, test_mlm_acc_list, test_nsp_acc_list = [], [], [], [], []
-    # epochs = []
-
     if args.task:
         print('Start Down Stream Task')
+        args.epochs = 3
+        args.lr = 3e-5
 
         state_dict = torch.load(args.checkpoints)
         model.load_state_dict(state_dict['model_state_dict'])
 
         criterion = {
             'mlm': None,
-            'nsp': nn.NLLLoss()
+            'nsp': nn.CrossEntropyLoss()
         }
 
-        optimizer = optim.Adam(model.parameters(), lr=3e-5, weight_decay=args.weight_decay)
+        optimizer = optim.Adam(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
 
-        for epoch in range(1, 4):
+        for epoch in range(1, args.epochs + 1):
             train_mlm_loss, train_nsp_loss, train_loss, train_mlm_acc, train_nsp_acc = _train(epoch, train_loader, model, optimizer, criterion, args)
             test_mlm_loss, test_nsp_loss, test_loss, test_mlm_acc, test_nsp_acc = _eval(epoch, test_loader, model, criterion, args)
+            save_checkpoint(model, optimizer, args, epoch)
     else:
         print('Start Pre-training')
         criterion = {
             'mlm': nn.CrossEntropyLoss(ignore_index=0),
-            'nsp': nn.NLLLoss()
+            'nsp': nn.CrossEntropyLoss()
         }
         optimizer = optim.Adam(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
 

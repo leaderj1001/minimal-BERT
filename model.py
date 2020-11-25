@@ -197,4 +197,4 @@ class BERT(nn.Module):
         mask = (x > 0).unsqueeze(1).repeat(1, x.size(1), 1).unsqueeze(1)
         out = self.encoder(x, mask, segment)
 
-        return self.mlm_out(out), F.log_softmax(self.nsp_out(out[:, 0]), dim=-1)
+        return self.mlm_out(out), self.nsp_out(out[:, 0])

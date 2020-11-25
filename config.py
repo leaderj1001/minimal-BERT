@@ -33,21 +33,3 @@ def load_args():
     args = parser.parse_args()
 
     return args
-
-
-def load_easydict():
-    args = easydict.EasyDict({
-        "nsp_ratio": 0.5,
-        "mlm_ratio": 0.15,
-        "max_len": 32,
-        "base_dir": './data',
-        "batch_size": 64,
-        "num_workers": 4,
-        "N": 12,
-        "embedding_dim": 768,
-        "heads": 12,
-        "lr": 1e-4,
-        "weight_decay": 0.01
-    })
-
-    return args

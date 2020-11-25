@@ -198,11 +198,3 @@ def load_data(args):
     test_loader = DataLoader(test_data, batch_size=args.batch_size, shuffle=False, num_workers=args.num_workers)
 
     return train_loader, test_loader
-
-
-from config import load_args
-train_loader, test_loader = load_data(load_args())
-
-for _ in test_loader:
-    print(_)
-    break
