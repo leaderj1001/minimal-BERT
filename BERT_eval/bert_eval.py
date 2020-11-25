@@ -120,7 +120,7 @@ class BERTClassifier(nn.Module):
         self.bert = BertModel.from_pretrained('bert-base-uncased')
         self.fc = nn.Sequential(
             nn.ReLU(),
-            nn.Dropout(0.3),
+            nn.Dropout(0.1),
             nn.Linear(768, 2)
         )
 
